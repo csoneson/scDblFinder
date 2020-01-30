@@ -59,6 +59,7 @@
 #' @importFrom methods is
 #' @importFrom DelayedArray as.matrix
 #' @importFrom BiocNeighbors findKNN
+#' @importFrom BiocSingular bsparam
 #' 
 #' @examples
 #' library(SingleCellExperiment)
@@ -76,7 +77,7 @@ scDblFinder <- function( sce, artificialDoublets=NULL, clusters=NULL,
                          dbr.sd=0.015, k=20, clust.graph.type=c("snn","knn"), 
                          fullTable=FALSE, verbose=is.null(samples), 
                          score=c("weighted","ratio","hybrid"),
-                         BPPARAM=SerialParam(), BSPARAM=bsparam(),
+                         BPPARAM=SerialParam(), BSPARAM=bsparam()
                         ){
   clust.graph.type <- match.arg(clust.graph.type)
   clust.method <- match.arg(clust.method)

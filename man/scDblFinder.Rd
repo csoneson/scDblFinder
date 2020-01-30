@@ -4,13 +4,26 @@
 \alias{scDblFinder}
 \title{scDblFinder}
 \usage{
-scDblFinder(sce, artificialDoublets = NULL, clusters = NULL,
+scDblFinder(
+  sce,
+  artificialDoublets = NULL,
+  clusters = NULL,
   clust.method = c("louvain", "overcluster", "fast_greedy"),
-  samples = NULL, minClusSize = min(50, ncol(sce)/5),
-  maxClusSize = NULL, nfeatures = 1000, dims = 20, dbr = NULL,
-  dbr.sd = 0.015, k = 20, clust.graph.type = c("snn", "knn"),
-  fullTable = FALSE, verbose = is.null(samples),
-  score = c("weighted", "ratio", "hybrid"), BPPARAM = SerialParam())
+  samples = NULL,
+  minClusSize = min(50, ncol(sce)/5),
+  maxClusSize = NULL,
+  nfeatures = 1000,
+  dims = 20,
+  dbr = NULL,
+  dbr.sd = 0.015,
+  k = 20,
+  clust.graph.type = c("snn", "knn"),
+  fullTable = FALSE,
+  verbose = is.null(samples),
+  score = c("weighted", "ratio", "hybrid"),
+  BPPARAM = SerialParam(),
+  BSPARAM = bsparam()
+)
 }
 \arguments{
 \item{sce}{A \code{\link[SummarizedExperiment]{SummarizedExperiment-class}}}
@@ -66,6 +79,8 @@ detection rate.}
 
 \item{BPPARAM}{Used for multithreading when splitting by samples (i.e. when 
 `samples!=NULL`); otherwise passed to eventual PCA and K/SNN calculations.}
+
+\item{BSPARAM}{}
 }
 \value{
 The `sce` object with the following additional colData columns: 
