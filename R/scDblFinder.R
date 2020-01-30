@@ -40,6 +40,7 @@
 #' detection rate.
 #' @param BPPARAM Used for multithreading when splitting by samples (i.e. when 
 #' `samples!=NULL`); otherwise passed to eventual PCA and K/SNN calculations.
+#' @param BSPARAM 
 #'
 #' @return The `sce` object with the following additional colData columns: 
 #' `scDblFinder.ratio` (ratio of aritifical doublets among neighbors), 
@@ -75,7 +76,7 @@ scDblFinder <- function( sce, artificialDoublets=NULL, clusters=NULL,
                          dbr.sd=0.015, k=20, clust.graph.type=c("snn","knn"), 
                          fullTable=FALSE, verbose=is.null(samples), 
                          score=c("weighted","ratio","hybrid"),
-                         BPPARAM=SerialParam()
+                         BPPARAM=SerialParam(), BSPARAM=bsparam(),
                         ){
   clust.graph.type <- match.arg(clust.graph.type)
   clust.method <- match.arg(clust.method)
@@ -177,7 +178,7 @@ numbers of cells.")
 
   e <- cbind(as.matrix(counts(sce)), ad[row.names(sce),])
   e <- normalizeCounts(e)
-  pca <- calculatePCA(e, dims, subset_row=seq_len(nrow(e)))
+  pca <- calculatePCA(e, dims, subset_row=seq_len(nrow(e)), BSPARAM=BSPARAM)
 
   # evaluate by library size and non-zero features
   lsizes <- c(colSums(counts(sce)),colSums(ad))
